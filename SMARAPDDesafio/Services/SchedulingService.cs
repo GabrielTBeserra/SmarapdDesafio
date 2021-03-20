@@ -33,7 +33,9 @@ namespace SMARAPDDesafio.Services
             var isExits = await _context.Schedulings.AnyAsync(sc =>
                 sc.RoomId == scheduling.RoomId &&
                 (sc.EndTime <= scheduling.EndTime && sc.StartTime >= scheduling.StartTime ||
-                 scheduling.EndTime <= sc.EndTime && scheduling.StartTime >= sc.StartTime));
+                 scheduling.EndTime <= sc.EndTime && scheduling.StartTime >= sc.StartTime) &&
+                (sc.EndTime.Hour <= scheduling.EndTime.Hour && sc.StartTime.Hour >= scheduling.StartTime.Hour ||
+                 scheduling.EndTime.Hour <= sc.EndTime.Hour && scheduling.StartTime.Hour >= sc.StartTime.Hour));
 
 
             if (!isExits)
@@ -50,21 +52,23 @@ namespace SMARAPDDesafio.Services
         }
 
 
-        public async Task<Response> UpdateAsync(Scheduling obj)
+        public async Task<Response> UpdateAsync(Scheduling scheduling)
         {
-            var hasAny = await _context.Schedulings.AnyAsync(x => x.Id == obj.Id);
+            var hasAny = await _context.Schedulings.AnyAsync(x => x.Id == scheduling.Id);
             if (!hasAny) return new Response(ResponseType.ERROR) {Message = "Nao foi possivel atualizar o cadastro!"};
 
             try
             {
                 var isExits = await _context.Schedulings.AnyAsync(sc =>
-                    sc.RoomId == obj.RoomId &&
-                    (sc.EndTime <= obj.EndTime && sc.StartTime >= obj.StartTime ||
-                     obj.EndTime <= sc.EndTime && obj.StartTime >= sc.StartTime));
+                    sc.RoomId == scheduling.RoomId &&
+                    (sc.EndTime <= scheduling.EndTime && sc.StartTime >= scheduling.StartTime ||
+                     scheduling.EndTime <= sc.EndTime && scheduling.StartTime >= sc.StartTime) &&
+                    (sc.EndTime.Hour <= scheduling.EndTime.Hour && sc.StartTime.Hour >= scheduling.StartTime.Hour ||
+                     scheduling.EndTime.Hour <= sc.EndTime.Hour && scheduling.StartTime.Hour >= sc.StartTime.Hour));
 
                 if (!isExits)
                 {
-                    _context.Update(obj);
+                    _context.Update(scheduling);
                     await _context.SaveChangesAsync();
                     return new Response(ResponseType.SUCESS) {Message = "Agendamento atualizado com sucesso!"};
                 }

@@ -1,0 +1,14 @@
+.scheduleList {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.CreateNewButton {
+  text-decoration: none;
+  border: black 1px solid;
+  padding: 20px;
+  border-radius: 20px;
+}

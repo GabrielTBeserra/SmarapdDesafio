@@ -20,6 +20,8 @@ namespace SMARAPDDesafio.Controllers
         [HttpPost("insert")]
         public async Task<Response> Insert([FromBody] Scheduling scheduling)
         {
+            scheduling.EndTime = scheduling.EndTime.ToLocalTime();
+            scheduling.StartTime = scheduling.StartTime.ToLocalTime();
             return await _schedulingService.AddSchedule(scheduling);
         }
 
@@ -33,6 +35,8 @@ namespace SMARAPDDesafio.Controllers
         [HttpPost("update")]
         public async Task<Response> Update([FromBody] Scheduling scheduling)
         {
+            scheduling.EndTime = scheduling.EndTime.ToLocalTime();
+            scheduling.StartTime = scheduling.StartTime.ToLocalTime();
             return await _schedulingService.UpdateAsync(scheduling);
         }
     }
