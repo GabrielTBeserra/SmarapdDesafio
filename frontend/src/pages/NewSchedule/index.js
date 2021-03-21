@@ -14,6 +14,8 @@ export class NewSchedule extends Component {
       dataInicial: new Date(),
       dataFinal: new Date(),
       mensagem: "",
+      scheduleid: this.props.match.params.scheduleid,
+      buttonTitle: "Agendar",
     };
 
     this.handleFianlHour = this.handleFianlHour.bind(this);
@@ -29,24 +31,31 @@ export class NewSchedule extends Component {
   }
 
   LoadRoom() {
-    fetch(`http://localhost:5001/salas/get?id=${this.state.id}`)
-      .then((resp) => resp.json())
-      .then((response) => {
-        this.setState({ sala: response });
-        this.CreateScheduleRange();
-      });
-  }
-
-  CreateScheduleRange() {
-    let scheduligns = this.state.sala.schedulings.map((asd) => {
-      return {
-        startDate: new Date(asd.startTime),
-        endDate: new Date(asd.endTime),
-        key: "selection",
-      };
-    });
-
-    this.setState({ ranges: scheduligns });
+    if (this.state.scheduleid) {
+      fetch(`http://localhost:5001/agendamento/get?id=${this.state.scheduleid}`)
+        .then((resp) => resp.json())
+        .then((response) => {
+          let start = new Date(response.startTime);
+          let end = new Date(response.endTime);
+          this.setState({
+            sala: response,
+            titulo: response.title,
+            horaInicial: start.toISOString().substring(11, 16),
+            horaFinal: end.toISOString().substring(11, 16),
+            dataInicial: start.toISOString().substr(0, 10),
+            dataFinal: end.toISOString().substr(0, 10),
+            buttonTitle: "Atualizar",
+          });
+        });
+    } else {
+      fetch(
+        `http://localhost:5001/salas/get?id=${this.state.id}&roomid=${this.state.id}`
+      )
+        .then((resp) => resp.json())
+        .then((response) => {
+          this.setState({ sala: response });
+        });
+    }
   }
 
   handleInitialDate(event) {
@@ -78,28 +87,54 @@ export class NewSchedule extends Component {
     let splitHoraFinal = this.state.horaFinal.toString().split(":");
     dataFinal.setHours(splitHoraFinal[0], splitHoraFinal[1]);
 
-    fetch("http://localhost:5001/agendamento/insert", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        roomId: parseInt(this.state.id),
-        title: this.state.titulo,
-        startTime: dataInicial.toISOString(),
-        endTime: dataFinal.toISOString(),
-      }),
-    })
-      .then((asd) => asd.json())
-      .then((resp) => {
-        console.log(resp);
+    if (this.state.scheduleid) {
+      fetch("http://localhost:5001/agendamento/update", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: parseInt(this.state.scheduleid),
+          roomId: parseInt(this.state.id),
+          title: this.state.titulo,
+          startTime: dataInicial.toISOString(),
+          endTime: dataFinal.toISOString(),
+        }),
+      })
+        .then((asd) => asd.json())
+        .then((resp) => {
+          console.log(resp);
 
-        this.setState({ mensagem: resp.message });
-        if (resp.type === "SUCESS") {
-          this.props.history.push(`/sala/${this.state.id}`);
-        }
-      });
+          this.setState({ mensagem: resp.message });
+          if (resp.type === "SUCESS") {
+            this.props.history.push(`/sala/${this.state.id}`);
+          }
+        });
+    } else {
+      fetch("http://localhost:5001/agendamento/insert", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          roomId: parseInt(this.state.id),
+          title: this.state.titulo,
+          startTime: dataInicial.toISOString(),
+          endTime: dataFinal.toISOString(),
+        }),
+      })
+        .then((asd) => asd.json())
+        .then((resp) => {
+          console.log(resp);
+
+          this.setState({ mensagem: resp.message });
+          if (resp.type === "SUCESS") {
+            this.props.history.push(`/sala/${this.state.id}`);
+          }
+        });
+    }
 
     event.preventDefault();
   }
@@ -146,7 +181,11 @@ export class NewSchedule extends Component {
             className="scheduleinput"
           />
 
-          <input className="schedulebutton" type="submit" value="Enviar" />
+          <input
+            className="schedulebutton"
+            type="submit"
+            value={this.state.buttonTitle}
+          />
           <p>{this.state.mensagem}</p>
         </form>
       </div>

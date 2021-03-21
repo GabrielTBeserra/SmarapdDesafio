@@ -10,3 +10,8 @@
   color: white;
   font-weight: bold;
 }
+
+.actionButton {
+  background: none;
+  border: none;
+}
