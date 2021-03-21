@@ -15,6 +15,9 @@ namespace SMARAPDDesafio.Services
             _context = context;
         }
 
+        /// <summary>
+        ///     Popula o banco para testes com algum dados
+        /// </summary>
         public void Seed()
         {
             // Caso ja possua alguma sala criada, nao adiciona novas

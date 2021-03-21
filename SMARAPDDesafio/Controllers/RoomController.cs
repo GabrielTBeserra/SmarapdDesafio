@@ -17,30 +17,45 @@ namespace SMARAPDDesafio.Controllers
             _roomService = roomService;
         }
 
+        /// <summary>
+        ///     End point para obter todas salas que possuem pelo menos um agendamento
+        /// </summary>
         [HttpGet("salasagendadas")]
         public List<Room> GetAll()
         {
             return _roomService.JustScheduled();
         }
 
+        /// <summary>
+        ///     End point para obter todas a salas
+        /// </summary>
         [HttpGet("listall")]
-        public List<Room> FindAllasd()
+        public List<Room> FindAllFull()
         {
             return _roomService.FindAll();
         }
 
+        /// <summary>
+        ///     End point para obter uma sala atravez de um id
+        /// </summary>
         [HttpGet("get")]
         public async Task<Room> GetFromId(int id)
         {
             return await _roomService.FindFromId(id);
         }
 
+        /// <summary>
+        ///     End point para criar uma nova sala
+        /// </summary>
         [HttpGet("create")]
         public async Task<Response> Create()
         {
             return await _roomService.Create();
         }
 
+        /// <summary>
+        ///     End point para apagar um sala conforme o id informado-
+        /// </summary>
         [HttpDelete("delete")]
         public async Task<Response> Delete(int id)
         {

@@ -4,24 +4,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 using SMARAPDDesafio.Data;
 using SMARAPDDesafio.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
 
 namespace SMARAPDDesafio
 {
@@ -38,15 +23,15 @@ namespace SMARAPDDesafio
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            
-            
+
+
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Central De Atendimento", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo {Title = "Central De Atendimento", Version = "v1"});
             });
             services.AddCors(options =>
             {
-                options.AddPolicy(name: "DesafioCors",
+                options.AddPolicy("DesafioCors",
                     builder =>
                     {
                         builder.AllowAnyHeader()
@@ -54,7 +39,7 @@ namespace SMARAPDDesafio
                             .AllowAnyOrigin();
                     });
             });
-            
+
             services.AddDbContextPool<SmarapdDesafioContext>(
                 dbContextOptions => dbContextOptions
                     .UseMySql(
@@ -77,7 +62,7 @@ namespace SMARAPDDesafio
             }
 
             //app.UseHttpsRedirection();
-            
+
 
             app.UseRouting();
             app.UseCors("DesafioCors");

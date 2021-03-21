@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using SMARAPDDesafio.Data;
@@ -17,25 +16,15 @@ namespace SMARAPDDesafio.Services
             _context = context;
         }
 
-        public async Task<List<Room>> FindAll()
-        {
-            return await _context.Rooms.ToListAsync();
-        }
-
-        public async Task<Room> FindFromId(int id)
-        {
-            return await _context.Rooms.FirstOrDefaultAsync(r => r.RoomId == id);
-        }
-
-
+        /// <summary>
+        ///     Adiciona um novo agendamento
+        /// </summary>
         public async Task<Response> AddSchedule(Scheduling scheduling)
         {
             var isExits = await _context.Schedulings.AnyAsync(sc =>
                 sc.RoomId == scheduling.RoomId &&
                 (sc.EndTime <= scheduling.EndTime && sc.StartTime >= scheduling.StartTime ||
-                 scheduling.EndTime <= sc.EndTime && scheduling.StartTime >= sc.StartTime) &&
-                (sc.EndTime.Hour <= scheduling.EndTime.Hour && sc.StartTime.Hour >= scheduling.StartTime.Hour ||
-                 scheduling.EndTime.Hour <= sc.EndTime.Hour && scheduling.StartTime.Hour >= sc.StartTime.Hour));
+                 scheduling.EndTime <= sc.EndTime && scheduling.StartTime >= sc.StartTime));
 
 
             if (!isExits)
@@ -51,7 +40,9 @@ namespace SMARAPDDesafio.Services
                 {Message = "O agendamento nao foi realizado, ja possui uma agendamento nessa datas!"};
         }
 
-
+        /// <summary>
+        ///     Atualiza um agendamento
+        /// </summary>
         public async Task<Response> UpdateAsync(Scheduling scheduling)
         {
             var hasAny = await _context.Schedulings.AnyAsync(x => x.Id == scheduling.Id);
@@ -60,11 +51,9 @@ namespace SMARAPDDesafio.Services
             try
             {
                 var isExits = await _context.Schedulings.AnyAsync(sc =>
-                    sc.RoomId == scheduling.RoomId &&
+                    sc.RoomId != scheduling.RoomId &&
                     (sc.EndTime <= scheduling.EndTime && sc.StartTime >= scheduling.StartTime ||
-                     scheduling.EndTime <= sc.EndTime && scheduling.StartTime >= sc.StartTime) &&
-                    (sc.EndTime.Hour <= scheduling.EndTime.Hour && sc.StartTime.Hour >= scheduling.StartTime.Hour ||
-                     scheduling.EndTime.Hour <= sc.EndTime.Hour && scheduling.StartTime.Hour >= sc.StartTime.Hour));
+                     scheduling.EndTime <= sc.EndTime && scheduling.StartTime >= sc.StartTime));
 
                 if (!isExits)
                 {
@@ -72,6 +61,7 @@ namespace SMARAPDDesafio.Services
                     await _context.SaveChangesAsync();
                     return new Response(ResponseType.SUCESS) {Message = "Agendamento atualizado com sucesso!"};
                 }
+
 
                 return new Response(ResponseType.ERROR)
                     {Message = "As datas nao podem ser as mesmas de outro agendamento!"};
@@ -82,7 +72,9 @@ namespace SMARAPDDesafio.Services
             }
         }
 
-
+        /// <summary>
+        ///     Remove um agendamento conforme o id fornecido
+        /// </summary>
         public async Task<Response> RemoveAsync(int id)
         {
             try
@@ -96,6 +88,19 @@ namespace SMARAPDDesafio.Services
             {
                 return new Response(ResponseType.ERROR) {Message = e.Message};
             }
+        }
+
+        /// <summary>
+        ///     Responsavel por devolver um agendamento
+        ///     para popular a tela de edicao de agendamento
+        ///     Recebe o ID do agendamento e o ID da sala
+        /// </summary>
+        public async Task<Scheduling> GetFromId(int id, int roomid)
+        {
+            var scheduling = await _context.Schedulings.FirstOrDefaultAsync(a => a.Id == id && a.RoomId == roomid);
+            scheduling.EndTime = scheduling.EndTime.ToLocalTime();
+            scheduling.StartTime = scheduling.StartTime.ToLocalTime();
+            return scheduling;
         }
     }
 }

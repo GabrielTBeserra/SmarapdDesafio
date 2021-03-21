@@ -17,7 +17,9 @@ namespace SMARAPDDesafio.Services
             _context = context;
         }
 
-        // Retorna apenas a salas que possuem algum horario agendado
+        /// <summary>
+        ///     Retorna apenas a salas que possua algum horario agendado
+        /// </summary>
         public List<Room> JustScheduled()
         {
             var result = (from a in _context.Rooms
@@ -61,7 +63,9 @@ namespace SMARAPDDesafio.Services
             return openWith.Values.ToList();
         }
 
-        // Retorna todas as salas 
+        /// <summary>
+        ///     Retorna todas as salas
+        /// </summary>
         public List<Room> FindAll()
         {
             var result = (from a in _context.Rooms
@@ -135,7 +139,9 @@ namespace SMARAPDDesafio.Services
         }
 
 
-        // Retorna uma sala especifica
+        /// <summary>
+        ///     Retorna uma sala conforme um id fornecido.
+        /// </summary>
         public async Task<Room> FindFromId(int id)
         {
             var result = (from a in _context.Rooms
@@ -166,13 +172,9 @@ namespace SMARAPDDesafio.Services
             return await _context.Rooms.FirstOrDefaultAsync(r => r.RoomId == id);
         }
 
-        public async Task<Response> InsertAsync(Room room)
-        {
-            _context.Add(room);
-            await _context.SaveChangesAsync();
-            return new Response(ResponseType.SUCESS) {Message = "Nova Sala inserida com sucesso!"};
-        }
-
+        /// <summary>
+        ///     Cria uma nova sala
+        /// </summary>
         public async Task<Response> Create()
         {
             var room = new Room();
@@ -181,6 +183,9 @@ namespace SMARAPDDesafio.Services
             return new Response(ResponseType.SUCESS) {Message = "Sala adicionado com sucesso!"};
         }
 
+        /// <summary>
+        ///     Apaga um sala conforme um id fornecido
+        /// </summary>
         public async Task<Response> Delete(int id)
         {
             try
