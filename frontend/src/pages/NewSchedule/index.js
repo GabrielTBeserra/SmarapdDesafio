@@ -32,7 +32,9 @@ export class NewSchedule extends Component {
 
   LoadRoom() {
     if (this.state.scheduleid) {
-      fetch(`http://localhost:5001/agendamento/get?id=${this.state.scheduleid}`)
+      fetch(
+        `http://localhost:5001/agendamento/get?id=${this.state.scheduleid}&roomid=${this.state.id}`
+      )
         .then((resp) => resp.json())
         .then((response) => {
           let start = new Date(response.startTime);
@@ -88,6 +90,11 @@ export class NewSchedule extends Component {
     dataFinal.setHours(splitHoraFinal[0], splitHoraFinal[1]);
 
     if (this.state.scheduleid) {
+      dataInicial.setDate(dataInicial.getDate() + 1);
+      dataFinal.setDate(dataFinal.getDate() + 1);
+      dataInicial.setHours(dataInicial.getHours() - 3);
+      dataFinal.setHours(dataFinal.getHours() - 3);
+
       fetch("http://localhost:5001/agendamento/update", {
         method: "POST",
         headers: {

@@ -72,7 +72,7 @@ export class Room extends Component {
               )} (${item.title})`}
               id={item.id}
               roomId={item.roomId}
-              props={this.props.history}
+              asd={this.props.history}
             ></Schedule>
           </>
         ))}

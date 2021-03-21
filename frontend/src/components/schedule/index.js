@@ -4,7 +4,8 @@ import "./style.css";
 
 export class Schedule extends Component {
   UpdateSchedule(roomId, id, props) {
-    this.props.history.push(`/agendar/${id}/${roomId}`);
+    console.log(this.props.asd);
+    this.props.asd.push(`/agendar/${roomId}/${id}`);
   }
 
   DeleteSchedule(id) {
@@ -31,13 +32,7 @@ export class Schedule extends Component {
           <IoTrash />
         </button>
         <button
-          onClick={() =>
-            this.UpdateSchedule(
-              this.props.roomId,
-              this.props.id,
-              this.props.props
-            ).bind(this)
-          }
+          onClick={() => this.UpdateSchedule(this.props.roomId, this.props.id)}
           className="actionButton"
         >
           <IoPencil />
