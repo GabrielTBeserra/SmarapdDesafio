@@ -1,0 +1,20 @@
+.MenuBar {
+  height: 50px;
+  width: 100%;
+  background-color: #6610f2;
+  min-height: 90hv;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.link {
+  text-decoration: none;
+  padding: 8px;
+  background: none;
+  cursor: pointer;
+  font-weight: bold;
+  color: rgb(255, 255, 255);
+}

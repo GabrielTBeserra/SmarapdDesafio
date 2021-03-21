@@ -3,11 +3,13 @@ import "./App.css";
 import { Main } from "./pages/Main";
 import { Room } from "./pages/Room";
 import { NewSchedule } from "./pages/NewSchedule";
+import { Header } from "./components/Header";
 
 function App() {
   return (
     <BrowserRouter>
       <div>
+        <Header />
         <Switch>
           <Route path="/" component={Main} exact />
           <Route path="/sala/:id" component={Room} />

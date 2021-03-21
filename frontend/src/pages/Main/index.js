@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Card } from "../../components/RoomCard";
-import { Link } from "react-router-dom";
+import { IoAddCircle } from "react-icons/io5";
 import "./style.css";
 
 export class Main extends Component {
@@ -22,14 +22,29 @@ export class Main extends Component {
       });
   }
 
+  CreateNewRoom() {
+    fetch("http://localhost:5001/salas/create")
+      .then((resp) => resp.json())
+      .then((response) => {
+        window.location.reload();
+      });
+  }
+
   render() {
     return (
-      <div className="container">
-        {this.state.salas.map((item) => (
-          <Link to={`/sala/${item.roomId}`}>
-            <Card roomId={item.roomId} as="teste" />
-          </Link>
-        ))}
+      <div className="main-container">
+        <div className="addnew">
+          <button onClick={this.CreateNewRoom} className="addbutton">
+            <IoAddCircle />
+            Criar nova sala
+          </button>
+        </div>
+        <h2>Salas disponiveis</h2>
+        <div className="list-container">
+          {this.state.salas.map((item) => (
+            <Card roomId={item} func={this.LoadRoomList} />
+          ))}
+        </div>
       </div>
     );
   }

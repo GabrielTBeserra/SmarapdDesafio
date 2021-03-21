@@ -1,21 +1,39 @@
-button {
+.botao {
   background: none;
   color: inherit;
   border: none;
   padding: 0;
   font: inherit;
   cursor: pointer;
-  width: 100%;
-  height: 100%;
+  text-decoration: none !important;
   outline: inherit;
   font-size: 25px;
+  color: white;
 }
 
 .card {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   width: 130px;
   height: 70px;
   margin: 5px;
-  border: solid #409dff 3px;
-  background-color: #add5ff;
-  border-radius: 20px;
+  border: solid #0d6efd 2px;
+  background-color: #3888ff;
+  border-radius: 10px;
+}
+
+.botaodelete {
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  text-decoration: none !important;
+  outline: inherit;
+  font-size: 25px;
+  color: black;
 }

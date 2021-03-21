@@ -34,11 +34,17 @@ namespace SMARAPDDesafio.Controllers
         {
             return await _roomService.FindFromId(id);
         }
-        
+
         [HttpGet("create")]
-        public async Task<Room> Create()
+        public async Task<Response> Create()
         {
             return await _roomService.Create();
+        }
+
+        [HttpDelete("delete")]
+        public async Task<Response> Delete(int id)
+        {
+            return await _roomService.Delete(id);
         }
     }
 }

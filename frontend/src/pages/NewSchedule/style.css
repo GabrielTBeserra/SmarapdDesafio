@@ -6,13 +6,69 @@
   align-items: center;
   justify-content: center;
 }
-.form {
+.addform {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   width: 30%;
-  height: 350px;
-  background-color: #1babff;
-  border-radius: 50px;
+  background-color: #4d07bd;
+  border-radius: 10px;
+}
+
+.scheduleinput {
+  width: 90%;
+  border-radius: 5px;
+  color: inherit;
+  border: none;
+  padding-left: 15px;
+  padding-right: 15px;
+  font: inherit;
+  cursor: pointer;
+  text-decoration: none !important;
+  height: 30px;
+}
+
+.schedulelabel {
+  padding: 5px;
+  font-size: 18px;
+  color: white;
+  font-weight: bold;
+}
+
+.schedulebutton {
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 10px;
+  font: inherit;
+  cursor: pointer;
+  text-decoration: none !important;
+  background-color: #dc3545;
+  border-radius: 5px;
+  margin: 5px;
+  margin-top: 15px;
+  outline: inherit;
+  font-size: 25px;
+  color: white;
+}
+
+.schedulebutton:hover {
+  background-color: #ac2936;
+}
+
+@media (max-width: 1500px) {
+  .addform {
+    width: 55%;
+  }
+}
+@media (max-width: 1000px) {
+  .addform {
+    width: 60%;
+  }
+}
+@media (max-width: 800px) {
+  .addform {
+    width: 100%;
+  }
 }

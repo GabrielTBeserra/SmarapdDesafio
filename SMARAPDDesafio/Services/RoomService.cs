@@ -173,12 +173,27 @@ namespace SMARAPDDesafio.Services
             return new Response(ResponseType.SUCESS) {Message = "Nova Sala inserida com sucesso!"};
         }
 
-        public async Task<Room> Create()
+        public async Task<Response> Create()
         {
             var room = new Room();
             _context.Add(room);
             await _context.SaveChangesAsync();
-            return room;
+            return new Response(ResponseType.SUCESS) {Message = "Sala adicionado com sucesso!"};
+        }
+
+        public async Task<Response> Delete(int id)
+        {
+            try
+            {
+                var obj = await _context.Rooms.FindAsync(id);
+                _context.Rooms.Remove(obj);
+                await _context.SaveChangesAsync();
+                return new Response(ResponseType.SUCESS) {Message = "Sala excluida com sucesso!"};
+            }
+            catch (DbUpdateException e)
+            {
+                return new Response(ResponseType.ERROR) {Message = "Nao foi possivel apagar essa sala"};
+            }
         }
     }
 }

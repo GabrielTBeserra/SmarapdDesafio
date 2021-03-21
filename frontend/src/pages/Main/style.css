@@ -1,8 +1,48 @@
-.container {
-  min-height: 100vh;
+.main-container {
+  min-height: 90hv;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.list-container {
+  min-height: 90hv;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
+}
+
+.link:hover {
+  color: rgb(162, 0, 255);
+}
+
+.addnew {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.addbutton {
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 5px;
+  font: inherit;
+  cursor: pointer;
+  text-decoration: none !important;
+  background-color: #dc3545;
+  border-radius: 5px;
+  margin: 5px;
+  outline: inherit;
+  font-size: 25px;
+  color: white;
+}
+.addbutton:hover {
+  background-color: #ac2936;
 }

@@ -107,41 +107,46 @@ export class NewSchedule extends Component {
   render() {
     return (
       <div className="container">
-        <form onSubmit={this.handleSubmit} className="form">
-          <label>Titulo:</label>
+        <form onSubmit={this.handleSubmit} className="addform">
+          <label className="schedulelabel">Titulo:</label>
           <input
             type="text"
             value={this.state.titulo}
             onChange={this.handleTitle}
+            className="scheduleinput"
           />
 
-          <label>Data Inicial:</label>
+          <label className="schedulelabel">Data Inicial:</label>
           <input
             type="date"
             value={this.state.dataInicial}
             onChange={this.handleInitialDate}
+            className="scheduleinput"
           />
-          <label>Hora Inicial:</label>
+          <label className="schedulelabel">Hora Inicial:</label>
           <input
             type="time"
             value={this.state.horaInicial}
             onChange={this.handleInitialHour}
+            className="scheduleinput"
           />
 
-          <label>Data Final:</label>
+          <label className="schedulelabel">Data Final:</label>
           <input
             type="date"
             value={this.state.dataFinal}
             onChange={this.handleFinalDate}
+            className="scheduleinput"
           />
-          <label>Hora Final:</label>
+          <label className="schedulelabel">Hora Final:</label>
           <input
             type="time"
             value={this.state.horaFinal}
             onChange={this.handleFianlHour}
+            className="scheduleinput"
           />
 
-          <input type="submit" value="Enviar" />
+          <input className="schedulebutton" type="submit" value="Enviar" />
           <p>{this.state.mensagem}</p>
         </form>
       </div>

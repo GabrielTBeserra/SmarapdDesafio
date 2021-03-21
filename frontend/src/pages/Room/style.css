@@ -7,8 +7,21 @@
 }
 
 .CreateNewButton {
-  text-decoration: none;
-  border: black 1px solid;
-  padding: 20px;
-  border-radius: 20px;
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 10px;
+  font: inherit;
+  cursor: pointer;
+  text-decoration: none !important;
+  background-color: #dc3545;
+  border-radius: 5px;
+  margin: 5px;
+  outline: inherit;
+  font-size: 25px;
+  color: white;
+}
+
+.CreateNewButton:hover {
+  background-color: #ac2936;
 }
