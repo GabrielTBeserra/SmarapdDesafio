@@ -9,7 +9,6 @@ export class Card extends Component {
       fetch(`http://localhost:5001/salas/delete?id=${id}`, { method: "DELETE" })
         .then((resp) => resp.json())
         .then((response) => {
-          console.log(response);
           window.location.reload();
         });
     }

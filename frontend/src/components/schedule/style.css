@@ -1,4 +1,5 @@
 .schedule {
+  display: flex;
   margin: 5px;
   padding: 10px;
   border: solid #0d6efd 2px;
@@ -9,9 +10,17 @@
   text-overflow: ellipsis;
   color: white;
   font-weight: bold;
+  justify-content: space-between;
 }
 
 .actionButton {
   background: none;
   border: none;
+}
+
+.buttonGroup {
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
 }

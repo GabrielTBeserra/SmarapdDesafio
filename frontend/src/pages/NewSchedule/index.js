@@ -92,8 +92,6 @@ export class NewSchedule extends Component {
     if (this.state.scheduleid) {
       dataInicial.setDate(dataInicial.getDate() + 1);
       dataFinal.setDate(dataFinal.getDate() + 1);
-      dataInicial.setHours(dataInicial.getHours() - 3);
-      dataFinal.setHours(dataFinal.getHours() - 3);
 
       fetch("http://localhost:5001/agendamento/update", {
         method: "POST",
@@ -109,10 +107,8 @@ export class NewSchedule extends Component {
           endTime: dataFinal.toISOString(),
         }),
       })
-        .then((asd) => asd.json())
+        .then((response) => response.json())
         .then((resp) => {
-          console.log(resp);
-
           this.setState({ mensagem: resp.message });
           if (resp.type === "SUCESS") {
             this.props.history.push(`/sala/${this.state.id}`);
@@ -132,10 +128,8 @@ export class NewSchedule extends Component {
           endTime: dataFinal.toISOString(),
         }),
       })
-        .then((asd) => asd.json())
+        .then((response) => response.json())
         .then((resp) => {
-          console.log(resp);
-
           this.setState({ mensagem: resp.message });
           if (resp.type === "SUCESS") {
             this.props.history.push(`/sala/${this.state.id}`);

@@ -30,14 +30,13 @@ export class Room extends Component {
   }
 
   CreateScheduleRange() {
-    let scheduligns = this.state.sala.schedulings.map((asd) => {
+    let scheduligns = this.state.sala.schedulings.map((item) => {
       return {
         roomId: this.state.id,
-        id: asd.id,
-        startDate: new Date(asd.startTime),
-        endDate: new Date(asd.endTime),
-        title: asd.title,
-        key: "selection",
+        id: item.id,
+        startDate: new Date(item.startTime),
+        endDate: new Date(item.endTime),
+        title: item.title,
       };
     });
 
@@ -51,11 +50,6 @@ export class Room extends Component {
     return `${dd}/${mm}/${yyyy} ${dateIn.getHours()}:${dateIn.getMinutes()}`;
   }
 
-  handleSelect(ranges) {
-    console.log(ranges);
-    // <DateRange ranges={this.state.ranges} onChange={this.handleSelect} />
-  }
-
   render() {
     return (
       <div className="scheduleList">
@@ -64,18 +58,20 @@ export class Room extends Component {
           Agendar
         </Link>
         <hr />
-        {this.state.ranges.map((item) => (
-          <>
-            <Schedule
-              text={`${this.FormatDate(item.startDate)} -> ${this.FormatDate(
-                item.endDate
-              )} (${item.title})`}
-              id={item.id}
-              roomId={item.roomId}
-              asd={this.props.history}
-            ></Schedule>
-          </>
-        ))}
+        <div>
+          {this.state.ranges.map((item) => (
+            <>
+              <Schedule
+                text={`${this.FormatDate(item.startDate)} -> ${this.FormatDate(
+                  item.endDate
+                )} (${item.title})`}
+                id={item.id}
+                roomId={item.roomId}
+                redirect={this.props.history}
+              ></Schedule>
+            </>
+          ))}
+        </div>
       </div>
     );
   }
