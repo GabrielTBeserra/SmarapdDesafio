@@ -13,7 +13,7 @@
 
 - Por usar o EntityFramework executar o comando 'Update-Database' no console de de Gerenciador de Pacotes do Visual Studio
 
-### Executado com o IIS Express atravez do Visual Studio 2019
+### Executado com o IIS Express pelo Visual Studio 2019
 
 # Executar o FrontEnd
 
